@@ -138,6 +138,27 @@ void MainWindow::on_test_btn_clicked()
         // Handle the case where no rows were returned
         qDebug() << "No rows returned from the query.";
     }
+    // connClose();
+
+
+    // connOpen();
+
+}
+
+
+void MainWindow::on_count_rows_clicked()
+{
+    connOpen();
+    QSqlQuery qry;
+    qry.prepare("SELECT COUNT(*) FROM bookings"); // Counts Rows in SQLITE
+    qry.exec();
+
+    if (qry.next()) {
+        int rowCount = qry.value(0).toInt();
+        qDebug() << "Number of rows in the table: " << rowCount;
+    } else {
+        qDebug() << "Failed to execute the query or fetch the result.";
+    }
     connClose();
 }
 

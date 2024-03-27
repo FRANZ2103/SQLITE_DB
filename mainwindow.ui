@@ -132,6 +132,19 @@
      <string>TestBtn</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="count_rows">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>111</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Count Rows</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

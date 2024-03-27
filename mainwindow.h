@@ -52,6 +52,8 @@ private slots:
 
     void on_test_btn_clicked();
 
+    void on_count_rows_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
