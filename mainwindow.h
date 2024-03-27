@@ -54,6 +54,10 @@ private slots:
 
     void on_count_rows_clicked();
 
+    void on_select_from_Limit_to_variables_clicked();
+
+    void on_getValAtLimitNum_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

@@ -145,6 +145,40 @@
      <string>Count Rows</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="select_from_Limit_to_variables">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>60</y>
+      <width>261</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&quot;SELECT * FROM bookings LIMIT 1&quot;
+ to variables</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="getValAtLimitNum">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>130</y>
+      <width>101</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>101</width>
+      <height>61</height>
+     </size>
+    </property>
+    <property name="text">
+     <string>Get values 
+at a limitNum </string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
