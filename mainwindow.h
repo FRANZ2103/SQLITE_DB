@@ -16,6 +16,8 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 public:
     QSqlDatabase mydb;
+    int getCurrentPassengerValue(int &passengerNumber);
+    int getValueFromDB(int &valueToUpdate);
     void connClose(){
         mydb.close();
         mydb.removeDatabase(QSqlDatabase::defaultConnection);
@@ -57,6 +59,12 @@ private slots:
     void on_select_from_Limit_to_variables_clicked();
 
     void on_getValAtLimitNum_clicked();
+
+    void on_incrementThenInsert_clicked();
+
+    // void on_decrementThenInsert_clicked();
+
+    void on_decrementThenInsert_clicked();
 
 private:
     Ui::MainWindow *ui;

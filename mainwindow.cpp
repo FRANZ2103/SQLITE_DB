@@ -3,6 +3,39 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+int MainWindow::getCurrentPassengerValue(int &passengerNumber)
+{
+    // passengerNumber = 999;
+    // connOpen();
+    connOpen();
+    QSqlQuery qry;
+    //Get number first then insert
+    QString query = "SELECT passenger_count FROM active_slot_sucat2ayala";
+
+    qry.prepare(query);
+    qry.exec();
+
+    if(qry.next()){
+        QVariant NumberVariant = qry.value(0);
+
+        passengerNumber = NumberVariant.toInt();
+             qDebug()<<"Passenger Number is "<< passengerNumber;
+        // ui->currentNumber_label->setText(QString::number(passengerNumber));
+        }
+    else{
+        qDebug()<<"Something wrong with increment";
+    }
+
+    connClose();
+    return passengerNumber;
+}
+
+int MainWindow::getValueFromDB(int &valueToUpdate)
+{
+    valueToUpdate = 999;
+    return valueToUpdate;
+}
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -218,5 +251,59 @@ void MainWindow::on_getValAtLimitNum_clicked()
             qDebug() << "No rows returned from the query.";
         }
     }
+}
+
+
+
+void MainWindow::on_incrementThenInsert_clicked()
+{
+    //Get number first then insert
+
+    // QString query = "SELECT passenger_count FROM active_slot_sucat2ayala";
+  int newwr;
+  int passengerNumber = getCurrentPassengerValue(newwr);
+  qDebug()<<" returned "<<passengerNumber;/*
+
+    qry.prepare(query);
+    qry.exec();
+
+    if(qry.next()){
+        QVariant NumberVariant = qry.value(0);
+
+        passengerNumber = NumberVariant.toInt();
+        // qDebug()<<"Passenger Number is "<< passengerNumber;
+        ui->currentNumber_label->setText(QString::number(passengerNumber));
+        }
+    else{
+        qDebug()<<"Something wrong with increment";
+    }*/
+
+
+    //We now update
+  int newPassengerCount = passengerNumber +1;
+  connOpen();
+  QSqlQuery qry;
+    qry.prepare("UPDATE active_slot_sucat2ayala SET passenger_count = :new_passenger_count WHERE current_plate = :plate_value");
+    QString plateValueToUpdate = "XYZ-123";  // Example current_plate value to update
+    qry.bindValue(":new_passenger_count", newPassengerCount);
+    qry.bindValue(":plate_value", plateValueToUpdate);
+
+    if(qry.exec()){
+
+        qDebug()<<"Passenger Number is updated "<< newPassengerCount;
+        // ui->currentNumber_label->setText();
+    }
+    else{
+        qDebug()<<"Something wrong with increment";
+    }
+
+}
+
+void MainWindow::on_decrementThenInsert_clicked()
+{
+    int tempValue;
+    int passengerNumber =  getCurrentPassengerValue(tempValue);
+    int testt =  getCurrentPassengerValue(tempValue);
+    qDebug()<<"Try "<<testt;
 }
 
