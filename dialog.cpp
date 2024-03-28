@@ -1,3 +1,4 @@
+#include <QTimer>
 #include "dialog.h"
 #include "ui_dialog.h"
 void Dialog::rowcount()
@@ -44,7 +45,12 @@ void Dialog::getDeets()
         qDebug()<<"Current Passengers: "<<currentPassengers<<"/"<<value4.toInt();
         qDebug()<<"Departing at approx: "<<departureTime;
 
-        ui->plateNumDisplay->setText("Plate Number: "+ stringValue1);
+
+        ui->slotsAvailable->setText("Bookable slots: \n"+QString::number(bookingsRemaining));
+        ui->plateNumDisplay->setText("Plate Number: \n"+ stringValue1);
+        ui->departing_time_label->setText("Departing Time: \n"+ departureTime);
+        ui->passenger_count_label->setText("Current Passengers: \n"+ value3.toString()+"/"+value4.toString());
+
     } else {
 
         qDebug() << "No rows returned from the query.";
@@ -53,7 +59,9 @@ void Dialog::getDeets()
 
 }
 
-
+void printHi() {
+    qDebug() << "Hi";
+}
 Dialog::Dialog(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::Dialog)
@@ -64,6 +72,18 @@ Dialog::Dialog(QWidget *parent)
     //get bookable deeets
     //get current passenger count, plate, maxcap, bookable slots
     rowcount();
+
+
+    QTimer timer;
+
+    // Connect the timeout signal of the timer to the printHi slot
+    QObject::connect(&timer, &QTimer::timeout, &printHi);
+
+    // Set the timer interval to 1000 milliseconds (1 second)
+    timer.setInterval(1000);
+
+    // Start the timer
+    timer.start();
 }
 
 Dialog::~Dialog()
@@ -71,3 +91,10 @@ Dialog::~Dialog()
     delete ui;
 
 }
+
+
+
+void Dialog::on_testButton_clicked()
+{
+}
+

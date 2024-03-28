@@ -40,6 +40,9 @@ public:
     explicit Dialog(QWidget *parent = nullptr);
     ~Dialog();
 
+private slots:
+    void on_testButton_clicked();
+
 private:
     Ui::Dialog *ui;
 };

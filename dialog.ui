@@ -13,17 +13,17 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="testButton">
    <property name="geometry">
     <rect>
-     <x>440</x>
-     <y>250</y>
+     <x>1010</x>
+     <y>10</y>
      <width>101</width>
      <height>29</height>
     </rect>
    </property>
    <property name="text">
-    <string>PushButton</string>
+    <string>testButton</string>
    </property>
   </widget>
   <widget class="QLabel" name="label">
@@ -55,27 +55,65 @@
   <widget class="QLabel" name="slotsAvailable">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>100</y>
+     <x>540</x>
+     <y>220</y>
      <width>151</width>
-     <height>20</height>
+     <height>51</height>
     </rect>
    </property>
    <property name="text">
     <string>Bookable slots:</string>
    </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
   </widget>
   <widget class="QLabel" name="plateNumDisplay">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>140</y>
+     <x>30</x>
+     <y>220</y>
      <width>141</width>
-     <height>20</height>
+     <height>51</height>
     </rect>
    </property>
    <property name="text">
     <string>Plate Number:</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="departing_time_label">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>220</y>
+     <width>141</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Departing Time:</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="passenger_count_label">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>220</y>
+     <width>151</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Current Passengers:</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
  </widget>
