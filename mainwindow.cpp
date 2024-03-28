@@ -1,3 +1,5 @@
+// /
+#include <QMessageBox>
 #include <QSqlQueryModel>
 #include <QSqlQuery>
 #include "mainwindow.h"
@@ -30,17 +32,39 @@ int MainWindow::getCurrentPassengerValue(int &passengerNumber)
     return passengerNumber;
 }
 
-int MainWindow::getValueFromDB(int &valueToUpdate)
+int MainWindow::getPasengerCapacity(int &passengerCap)
 {
-    valueToUpdate = 999;
-    return valueToUpdate;
+    connOpen();
+    QSqlQuery qry;
+    QString query = "SELECT passenger_cap FROM active_slot_sucat2ayala";
+        qry.prepare(query);
+        qry.exec();
+
+    if(qry.next()){
+        QVariant NumberVariant = qry.value(0);
+
+        passengerCap = NumberVariant.toInt();
+        qDebug()<<"Passenger Capacity is "<< passengerCap;
+    }
+    else{
+        qDebug()<<"Something wrong with getting passenger Cao";
+    }
+
+    connClose();
+    return passengerCap;
+
 }
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    int temp,tempNum;
+    int passengerCapacity = getPasengerCapacity(temp);
+    int newPassengerCount = getCurrentPassengerValue(tempNum);
+    ui->currentNumber_label->setText(QString::number(newPassengerCount)+"/"+QString::number(passengerCapacity));
 }
 
 MainWindow::~MainWindow()
@@ -258,29 +282,21 @@ void MainWindow::on_getValAtLimitNum_clicked()
 void MainWindow::on_incrementThenInsert_clicked()
 {
     //Get number first then insert
+    int tempNum;
+    int tempNum2;
+    int newPassengerCount = getCurrentPassengerValue(tempNum);
+    int passengerCapacity = getPasengerCapacity(tempNum2);
+    // int newPassengerCount;
+    if(newPassengerCount<passengerCapacity){
+        newPassengerCount = newPassengerCount +1;
+    }else{
+        qDebug() << "maximum capacity achieved"<<newPassengerCount<<"/"<<passengerCapacity;
+        QString message =   QString::number(newPassengerCount)+"/"+QString::number(passengerCapacity)+" Maximum capacity is achieved for this vehicle, press depart now to depart";
+        QMessageBox::information(this, "Maximum Capacity Achieved", message);
 
-    // QString query = "SELECT passenger_count FROM active_slot_sucat2ayala";
-  int newwr;
-  int passengerNumber = getCurrentPassengerValue(newwr);
-  qDebug()<<" returned "<<passengerNumber;/*
-
-    qry.prepare(query);
-    qry.exec();
-
-    if(qry.next()){
-        QVariant NumberVariant = qry.value(0);
-
-        passengerNumber = NumberVariant.toInt();
-        // qDebug()<<"Passenger Number is "<< passengerNumber;
-        ui->currentNumber_label->setText(QString::number(passengerNumber));
-        }
-    else{
-        qDebug()<<"Something wrong with increment";
-    }*/
-
+    }
 
     //We now update
-  int newPassengerCount = passengerNumber +1;
   connOpen();
   QSqlQuery qry;
     qry.prepare("UPDATE active_slot_sucat2ayala SET passenger_count = :new_passenger_count WHERE current_plate = :plate_value");
@@ -290,20 +306,55 @@ void MainWindow::on_incrementThenInsert_clicked()
 
     if(qry.exec()){
 
-        qDebug()<<"Passenger Number is updated "<< newPassengerCount;
-        // ui->currentNumber_label->setText();
+        // qDebug()<<"Passenger Number is updated "<< newPassengerCount;
+
+        ui->currentNumber_label->setText(QString::number(newPassengerCount)+"/"+QString::number(passengerCapacity));
+        // connClose();
     }
     else{
         qDebug()<<"Something wrong with increment";
+        // connClose();
     }
 
 }
 
 void MainWindow::on_decrementThenInsert_clicked()
 {
-    int tempValue;
-    int passengerNumber =  getCurrentPassengerValue(tempValue);
-    int testt =  getCurrentPassengerValue(tempValue);
-    qDebug()<<"Try "<<testt;
+
+    int tempNum;
+    int tempNum2;
+    int passengerNumber = getCurrentPassengerValue(tempNum);
+    int passengerCapacity = getPasengerCapacity(tempNum2);
+    int newPassengerCount;
+    if(passengerNumber > 0){
+       newPassengerCount =  passengerNumber -1;
+    }
+    else{
+        qDebug()<<"Cannot decrement further";
+        QString message =  "Current passenger count is "+ QString::number(newPassengerCount)+", cannot decrement further";
+        QMessageBox::information(this, "Cannot decrement further", message);
+
+    }
+
+    connOpen();
+    QSqlQuery qry;
+        qry.prepare("UPDATE active_slot_sucat2ayala SET passenger_count = :new_passenger_count WHERE current_plate = :plate_value");
+    QString plateValueToUpdate = "XYZ-123";  // Example current_plate value to update
+        qry.bindValue(":new_passenger_count", newPassengerCount);
+        qry.bindValue(":plate_value", plateValueToUpdate);
+
+        if(qry.exec()){
+
+            // qDebug()<<"Passenger Number is updated "<< newPassengerCount;
+            // ui->currentNumber_label->setText(QString::number(newPassengerCount));
+
+            ui->currentNumber_label->setText(QString::number(newPassengerCount)+"/"+QString::number(passengerCapacity));
+            // connClose();
+        }
+        else{
+            qDebug()<<"Something wrong with increment";
+            // connClose();
+        }
+
 }
 

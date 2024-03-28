@@ -17,7 +17,8 @@ class MainWindow : public QMainWindow
 public:
     QSqlDatabase mydb;
     int getCurrentPassengerValue(int &passengerNumber);
-    int getValueFromDB(int &valueToUpdate);
+    int getPasengerCapacity(int &passengerCap);
+
     void connClose(){
         mydb.close();
         mydb.removeDatabase(QSqlDatabase::defaultConnection);
@@ -33,7 +34,7 @@ public:
             return false;
         }
         else{
-            qDebug()<< "Connected....!";
+            // qDebug()<< "Connected....!";
             return true;
         }
     }
@@ -61,8 +62,6 @@ private slots:
     void on_getValAtLimitNum_clicked();
 
     void on_incrementThenInsert_clicked();
-
-    // void on_decrementThenInsert_clicked();
 
     void on_decrementThenInsert_clicked();
 
