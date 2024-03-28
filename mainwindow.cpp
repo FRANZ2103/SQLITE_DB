@@ -1,4 +1,4 @@
-// /
+#include "dialog.h"
 #include <QMessageBox>
 #include <QSqlQueryModel>
 #include <QSqlQuery>
@@ -356,5 +356,14 @@ void MainWindow::on_decrementThenInsert_clicked()
             // connClose();
         }
 
+}
+
+
+void MainWindow::on_pushButton_clicked()
+{
+
+    Dialog dd;
+    dd.exec();
+    dd.setModal(true);
 }
 

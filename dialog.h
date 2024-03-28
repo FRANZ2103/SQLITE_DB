@@ -42,6 +42,7 @@ public:
 
 private slots:
     void on_testButton_clicked();
+    void showtime();
 
 private:
     Ui::Dialog *ui;

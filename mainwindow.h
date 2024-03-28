@@ -65,6 +65,8 @@ private slots:
 
     void on_decrementThenInsert_clicked();
 
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

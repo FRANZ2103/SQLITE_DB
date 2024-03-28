@@ -1,3 +1,4 @@
+#include "mainwindow.h"
 #include <QTimer>
 #include "dialog.h"
 #include "ui_dialog.h"
@@ -67,6 +68,9 @@ Dialog::Dialog(QWidget *parent)
     , ui(new Ui::Dialog)
 {
     ui->setupUi(this);
+    QTimer * timer = new QTimer(this);
+    connect (    timer, SIGNAL (timeout()), this, SLOT(showtime()));
+    timer->start();
     connOpen();
     getDeets();
     //get bookable deeets
@@ -74,16 +78,6 @@ Dialog::Dialog(QWidget *parent)
     rowcount();
 
 
-    QTimer timer;
-
-    // Connect the timeout signal of the timer to the printHi slot
-    QObject::connect(&timer, &QTimer::timeout, &printHi);
-
-    // Set the timer interval to 1000 milliseconds (1 second)
-    timer.setInterval(1000);
-
-    // Start the timer
-    timer.start();
 }
 
 Dialog::~Dialog()
@@ -96,5 +90,14 @@ Dialog::~Dialog()
 
 void Dialog::on_testButton_clicked()
 {
+}
+
+void Dialog::showtime()
+{
+QTime time = QTime::currentTime();
+QString time_text = time.toString("hh : mm : ss");
+ui -> label_clock->setText(time_text);
+getDeets();
+
 }
 
